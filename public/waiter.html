@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiter - Order System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>☕ Coffee Bar - Waiter</h1>
+            <div class="header-right">
+                <span id="userName" class="user-greeting"></span>
+                <div class="connection-status">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="order">📝 New Order</button>
+            <button class="tab-btn" data-tab="tables">🪑 Table Management</button>
+            <button class="tab-btn" data-tab="history">📋 Recent Orders</button>
+        </div>
+
+        <main class="main-content">
+            <!-- New Order Tab -->
+            <div class="tab-content active" id="orderTab">
+                <div class="order-form-section">
+                    <h2>Select Table</h2>
+                    
+                    <div class="table-grid" id="tableGrid">
+                        <!-- Tables 1-10 will be generated here -->
+                    </div>
+
+                    <div class="form-group">
+                        <label>Menu Items</label>
+                        <div class="menu-grid" id="menuGrid"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Selected Items</label>
+                        <div class="selected-items" id="selectedItems">
+                            <p class="empty-message">No items selected</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderNotes">Notes (Optional)</label>
+                        <textarea id="orderNotes" class="form-control" rows="3" placeholder="Special instructions..."></textarea>
+                    </div>
+
+                    <button id="submitOrder" class="btn btn-primary btn-large">
+                        📝 Submit Order
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table Management Tab -->
+            <div class="tab-content" id="tablesTab">
+                <h2>Table Management</h2>
+                <div class="tables-overview" id="tablesOverview">
+                    <!-- Table cards will be generated here -->
+                </div>
+            </div>
+
+            <!-- Recent Orders Tab -->
+            <div class="tab-content" id="historyTab">
+                <h2>Recent Orders</h2>
+                <div id="recentOrdersList" class="recent-orders-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    
+    <!-- Table Details Modal -->
+    <div id="tableModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Table <span id="modalTableNumber"></span> Details</h2>
+                <button class="modal-close" onclick="closeTableModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="tableModalBody">
+                <!-- Content will be filled dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="waiter.js"></script>
+</body>
+</html>

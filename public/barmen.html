@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barmen - Order System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>👨‍🍳 Coffee Bar - Barmen</h1>
+            <div class="header-right">
+                <span id="userName" class="user-greeting"></span>
+                <div class="connection-status">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content barmen-layout">
+            <div class="orders-section">
+                <div class="section-header">
+                    <h2>🔔 Pending Orders</h2>
+                    <span class="badge" id="pendingCount">0</span>
+                </div>
+                <div id="pendingOrders" class="orders-list"></div>
+            </div>
+
+            <div class="orders-section">
+                <div class="section-header">
+                    <h2>⏳ In Progress</h2>
+                    <span class="badge" id="progressCount">0</span>
+                </div>
+                <div id="progressOrders" class="orders-list"></div>
+            </div>
+
+            <div class="orders-section">
+                <div class="section-header">
+                    <h2>✅ Completed</h2>
+                    <span class="badge" id="completedCount">0</span>
+                </div>
+                <div id="completedOrders" class="orders-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <!-- Audio for notification -->
+    <audio id="notificationSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZSA0PV6nk762PFQxCmdzxwmwhBTGH0fPTgjMGHm7A7+OZ" type="audio/wav">
+    </audio>
+
+    <script src="barmen.js"></script>
+</body>
+</html>

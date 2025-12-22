@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "$2b$10$OZwtayhf6tFRcUx2zSL30ucraiRg.38cOrGL13PiClRGqq9Y3W5be",
+    "role": "admin",
+    "name": "Administrator"
+  },
+  {
+    "id": 4,
+    "username": "Boge",
+    "password": "$2b$10$lnG0DW/LRRAH7S368xN/DumV0xBpzLKeLJwXclXdua0o0nPePQJA2",
+    "role": "waiter",
+    "name": "Bogdan Talevski"
+  },
+  {
+    "id": 5,
+    "username": "Neno",
+    "password": "$2b$10$J3l6/mGOK3yMO3u4QavFLuq8JcKqqtGkvJwDAWt/Am.g0GSpHbUhm",
+    "role": "waiter",
+    "name": "Nenad Dudeski"
+  },
+  {
+    "id": 4,
+    "username": "Sashe",
+    "password": "$2b$10$2qz1gzD7XI2l7R5IcAXua.7A3LqHga68VSYe5bE2bAwoP/Oft/FUC",
+    "role": "barmen",
+    "name": "Aleksandar Santovski"
+  }
+]

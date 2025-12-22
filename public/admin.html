@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Coffee Bar System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-v2.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>👨‍💼 Admin Panel</h1>
+            </div>
+            <div class="header-right">
+                <span id="userName" class="user-greeting"></span>
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="stats">📊 Statistics</button>
+                <button class="tab-btn" data-tab="menu">🍽️ Menu Management</button>
+                <button class="tab-btn" data-tab="orders">📋 Orders</button>
+                <button class="tab-btn" data-tab="users">👥 Users</button>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="stats" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-value" id="totalOrders">0</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value" id="todayOrders">0</div>
+                        <div class="stat-label">Today's Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value" id="completedToday">0</div>
+                        <div class="stat-label">Completed Today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="totalRevenue">$0.00</div>
+                        <div class="stat-label">Today's Revenue</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Management Tab -->
+            <div id="menu" class="tab-content">
+                <div class="section-header">
+                    <h2>Menu Items</h2>
+                    <button id="addItemBtn" class="btn btn-primary">+ Add Item</button>
+                </div>
+                <div id="menuList" class="admin-table"></div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content">
+                <div class="section-header">
+                    <h2>All Orders</h2>
+                    <div class="filter-controls">
+                        <select id="orderStatusFilter" class="form-control filter-select">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="preparing">Preparing</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <select id="orderDateFilter" class="form-control filter-select">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                        <button id="exportOrdersBtn" class="btn btn-secondary btn-sm">📥 Export CSV</button>
+                    </div>
+                </div>
+                <div id="ordersList" class="orders-list"></div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users" class="tab-content">
+                <div class="section-header">
+                    <h2>System Users</h2>
+                    <button id="addUserBtn" class="btn btn-primary">+ Add User</button>
+                </div>
+                <div id="usersList" class="admin-table"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Menu Item Modal -->
+    <div id="menuModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="menuModalTitle">Add Menu Item</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="menuForm">
+                <input type="hidden" id="itemId">
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" id="itemName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="itemCategory" class="form-control" required>
+                        <option value="Coffee">Coffee</option>
+                        <option value="Cold Drinks">Cold Drinks</option>
+                        <option value="Water">Water</option>
+                        <option value="Snacks">Snacks</option>
+                        <option value="Juice">Juice</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" id="itemPrice" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Icon (emoji)</label>
+                    <input type="text" id="itemIcon" class="form-control" value="☕" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="itemDescription" class="form-control">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add User</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="userForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="userFullName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="userUsername" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="userPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="userRole" class="form-control" required>
+                        <option value="waiter">Waiter</option>
+                        <option value="barmen">Barmen</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    <script src="admin.js"></script>
+</body>
+</html>

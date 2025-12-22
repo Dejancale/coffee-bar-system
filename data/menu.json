@@ -1,0 +1,137 @@
+[
+  {
+    "id": "espresso",
+    "name": "Espresso",
+    "category": "Coffee",
+    "price": 2.5,
+    "icon": "☕",
+    "description": "Strong Italian coffee",
+    "available": true
+  },
+  {
+    "id": "cappuccino",
+    "name": "Cappuccino",
+    "category": "Coffee",
+    "price": 3.5,
+    "icon": "☕",
+    "description": "Espresso with steamed milk foam",
+    "available": true
+  },
+  {
+    "id": "latte",
+    "name": "Latte",
+    "category": "Coffee",
+    "price": 3.8,
+    "icon": "☕",
+    "description": "Smooth coffee with milk",
+    "available": true
+  },
+  {
+    "id": "americano",
+    "name": "Americano",
+    "category": "Coffee",
+    "price": 2.8,
+    "icon": "☕",
+    "description": "Espresso with hot water",
+    "available": true
+  },
+  {
+    "id": "macchiato",
+    "name": "Macchiato",
+    "category": "Coffee",
+    "price": 2.7,
+    "icon": "☕",
+    "description": "Espresso with milk foam",
+    "available": true
+  },
+  {
+    "id": "mocha",
+    "name": "Mocha",
+    "category": "Coffee",
+    "price": 4.2,
+    "icon": "☕",
+    "description": "Chocolate coffee delight",
+    "available": true
+  },
+  {
+    "id": "coca-cola",
+    "name": "Coca Cola",
+    "category": "Cold Drinks",
+    "price": 2.5,
+    "icon": "🥤",
+    "description": "Classic cola drink",
+    "available": true
+  },
+  {
+    "id": "sprite",
+    "name": "Sprite",
+    "category": "Cold Drinks",
+    "price": 2.5,
+    "icon": "🥤",
+    "description": "Lemon-lime soda",
+    "available": true
+  },
+  {
+    "id": "fanta",
+    "name": "Fanta",
+    "category": "Cold Drinks",
+    "price": 2.5,
+    "icon": "🥤",
+    "description": "Orange flavored soda",
+    "available": true
+  },
+  {
+    "id": "iced-tea",
+    "name": "Iced Tea",
+    "category": "Cold Drinks",
+    "price": 2.8,
+    "icon": "🧃",
+    "description": "Refreshing cold tea",
+    "available": true
+  },
+  {
+    "id": "lemonade",
+    "name": "Lemonade",
+    "category": "Cold Drinks",
+    "price": 3,
+    "icon": "🍋",
+    "description": "Fresh homemade lemonade",
+    "available": true
+  },
+  {
+    "id": "still-water",
+    "name": "Still Water",
+    "category": "Water",
+    "price": 1.5,
+    "icon": "💧",
+    "description": "Natural mineral water",
+    "available": true
+  },
+  {
+    "id": "sparkling-water",
+    "name": "Sparkling Water",
+    "category": "Water",
+    "price": 2,
+    "icon": "💧",
+    "description": "Carbonated mineral water",
+    "available": true
+  },
+  {
+    "id": "apple-juice",
+    "name": "Apple Juice",
+    "category": "Juice",
+    "price": 3.5,
+    "icon": "🍎",
+    "description": "Fresh apple juice",
+    "available": true
+  },
+  {
+    "id": "mixed-juice",
+    "name": "Mixed Juice",
+    "category": "Juice",
+    "price": 3.8,
+    "icon": "🥤",
+    "description": "Tropical fruit mix",
+    "available": true
+  }
+]

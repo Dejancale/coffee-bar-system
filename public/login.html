@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Coffee Bar System</title>
+    <link rel="stylesheet" href="styles-v2.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-circle">
+                    <span class="logo-icon">☕</span>
+                </div>
+                <h1>Coffee Bar System</h1>
+                <p class="subtitle">Professional Order Management</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <span class="label-icon">👤</span>
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-control" 
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <span class="label-icon">🔒</span>
+                        Password
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-control" 
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-large btn-login">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loader" style="display: none;">
+                        <span class="spinner"></span>
+                    </span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <div class="demo-credentials">
+                    <p class="demo-title">📋 Demo Credentials</p>
+                    <div class="credentials-grid">
+                        <div class="credential-item">
+                            <strong>Admin:</strong> admin / admin123
+                        </div>
+                        <div class="credential-item">
+                            <strong>Waiter:</strong> waiter1 / admin123
+                        </div>
+                        <div class="credential-item">
+                            <strong>Barmen:</strong> barmen1 / admin123
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+    
+    <script src="login.js"></script>
+</body>
+</html>
