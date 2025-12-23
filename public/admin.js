@@ -3,6 +3,7 @@ let menuItems = [];
 let orders = [];
 let users = [];
 let orderFilters = { status: 'all', date: 'all' };
+let selectedDate = new Date(); // For calendar filtering
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadCurrentUser();
@@ -14,7 +15,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupEventListeners();
     setupTabs();
     setupFilters();
+    initializeDateFilter();
+    
+    // Refresh stats and table management every 10 seconds
+    setInterval(async () => {
+        await loadStats();
+        // If on tables tab, refresh it
+        const tablesTab = document.getElementById('tables');
+        if (tablesTab && tablesTab.classList.contains('active')) {
+            renderTableManagement();
+        }
+    }, 10000);
 });
+
+function initializeDateFilter() {
+    const dateInput = document.getElementById('dateFilter');
+    if (dateInput) {
+        // Set today as default
+        dateInput.valueAsDate = new Date();
+    }
+}
+
+function filterByDate() {
+    const dateInput = document.getElementById('dateFilter');
+    if (dateInput && dateInput.value) {
+        selectedDate = new Date(dateInput.value);
+        loadStats();
+    }
+}
+
+function resetToToday() {
+    selectedDate = new Date();
+    const dateInput = document.getElementById('dateFilter');
+    if (dateInput) {
+        dateInput.valueAsDate = new Date();
+    }
+    loadStats();
+}
 
 async function loadCurrentUser() {
     try {
@@ -30,13 +67,40 @@ async function loadCurrentUser() {
 
 async function loadStats() {
     try {
-        const response = await fetch('/api/orders/stats');
-        const stats = await response.json();
+        const response = await fetch('/api/orders');
+        orders = await response.json();
         
-        document.getElementById('totalOrders').textContent = stats.totalOrders;
-        document.getElementById('todayOrders').textContent = stats.todayOrders;
-        document.getElementById('completedToday').textContent = stats.completedToday;
-        document.getElementById('totalRevenue').textContent = `$${stats.totalRevenue}`;
+        const selectedDay = new Date(selectedDate).setHours(0, 0, 0, 0);
+        const dayOrders = orders.filter(o => new Date(o.timestamp).setHours(0, 0, 0, 0) === selectedDay);
+        
+        // Active orders (not cleared by waiter)
+        const activeOrders = dayOrders.filter(o => !o.clearedBy).length;
+        
+        // Occupied tables (orders not cleared)
+        const occupiedTables = new Set(
+            orders.filter(o => !o.clearedBy).map(o => o.table)
+        ).size;
+        
+        // Completed orders (cleared by waiter)
+        const completedOrders = dayOrders.filter(o => o.clearedBy).length;
+        
+        // Total revenue (only from cleared orders)
+        const totalRevenue = dayOrders
+            .filter(o => o.clearedBy)
+            .reduce((sum, order) => {
+                const orderTotal = order.items.reduce((itemSum, item) => {
+                    const qty = item.quantity || 1;
+                    const price = item.price || 0;
+                    return itemSum + (price * qty);
+                }, 0);
+                return sum + orderTotal;
+            }, 0);
+        
+        document.getElementById('totalOrders').textContent = dayOrders.length;
+        document.getElementById('activeOrders').textContent = activeOrders;
+        document.getElementById('occupiedTables').textContent = `${occupiedTables}/10`;
+        document.getElementById('completedOrders').textContent = completedOrders;
+        document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
     } catch (error) {
         console.error('Error loading stats:', error);
     }
@@ -132,36 +196,71 @@ function renderOrdersList() {
     const sortedOrders = filteredOrders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     
     container.innerHTML = sortedOrders.map(order => {
-        const total = order.items.reduce((sum, item) => sum + item.price, 0);
+        const total = order.items.reduce((sum, item) => {
+            const qty = item.quantity || 1;
+            const price = item.price || 0;
+            return sum + (price * qty);
+        }, 0);
+        const statusIcon = order.clearedBy ? '✅' : (order.status === 'completed' ? '🔄' : (order.status === 'in-progress' ? '⚡' : '⏱️'));
+        
         return `
-            <div class="order-card order-card-${order.status}">
-                <div class="order-header">
-                    <div>
-                        <strong>Order #${order.id} - ${order.table}</strong>
-                        ${order.waiter ? `<span class="order-waiter">by ${order.waiter}</span>` : ''}
-                    </div>
-                    <div class="order-actions-inline">
+            <div class="collapsible-order-item" id="admin-order-${order.id}">
+                <div class="collapsible-order-header" onclick="toggleAdminOrder(${order.id})">
+                    <div class="order-summary">
+                        <span class="order-icon">${statusIcon}</span>
+                        <strong>Order #${order.id}</strong>
+                        <span class="order-table">Table ${order.table}</span>
                         <span class="status-badge status-${order.status}">${order.status}</span>
-                        <button onclick="printOrder(${order.id})" class="btn btn-sm btn-secondary" title="Print">🖨️</button>
+                        ${order.clearedBy ? '<span class="cleared-badge">✓ Cleared</span>' : ''}
+                    </div>
+                    <div class="order-total-right">
+                        <strong>$${total.toFixed(2)}</strong>
+                        <span class="collapse-arrow">▼</span>
                     </div>
                 </div>
-                <div class="order-items">
-                    ${order.items.map(item => `
-                        <div class="order-item">
-                            <span>${item.icon} ${item.name}</span>
-                            ${item.notes ? `<span class="item-note">📝 ${item.notes}</span>` : ''}
-                            <span>$${item.price.toFixed(2)}</span>
-                        </div>
-                    `).join('')}
-                </div>
-                ${order.notes ? `<div class="order-notes">📝 ${order.notes}</div>` : ''}
-                <div class="order-footer">
-                    <div class="order-total"><strong>Total: $${total.toFixed(2)}</strong></div>
-                    <div class="order-time">${new Date(order.timestamp).toLocaleString()}</div>
+                <div class="collapsible-order-details" id="admin-order-details-${order.id}" style="display: none;">
+                    <div class="order-meta">
+                        <span>👤 ${order.waiter}</span>
+                        <span>🕐 ${new Date(order.timestamp).toLocaleString()}</span>
+                        ${order.completedAt ? `<span>✅ Completed: ${new Date(order.completedAt).toLocaleTimeString()}</span>` : ''}
+                        ${order.clearedBy ? `<span>🧹 Cleared by: ${order.clearedBy}</span>` : ''}
+                    </div>
+                    <div class="order-items-list">
+                        <h4>Items:</h4>
+                        <ul>
+                            ${order.items.map(item => {
+                                const qty = item.quantity || 1;
+                                const price = item.price || 0;
+                                return `
+                                <li>
+                                    ${item.icon} ${item.name} ${qty > 1 ? `x${qty}` : ''} - $${(price * qty).toFixed(2)}
+                                    ${item.notes ? `<br><span class="item-note">📝 ${item.notes}</span>` : ''}
+                                </li>
+                                `;
+                            }).join('')}
+                        </ul>
+                    </div>
+                    ${order.notes ? `<div class="order-notes">📝 Order Notes: ${order.notes}</div>` : ''}
+                    <div class="order-actions">
+                        <button onclick="printOrder(${order.id})" class="btn btn-sm btn-secondary">🖨️ Print</button>
+                    </div>
                 </div>
             </div>
         `;
     }).join('');
+}
+
+function toggleAdminOrder(orderId) {
+    const details = document.getElementById(`admin-order-details-${orderId}`);
+    const arrow = document.querySelector(`#admin-order-${orderId} .collapse-arrow`);
+    
+    if (details.style.display === 'none') {
+        details.style.display = 'block';
+        arrow.textContent = '▲';
+    } else {
+        details.style.display = 'none';
+        arrow.textContent = '▼';
+    }
 }
 
 async function loadUsers() {
@@ -327,8 +426,199 @@ function setupTabs() {
             
             btn.classList.add('active');
             document.getElementById(tabName).classList.add('active');
+            
+            // Load table management when clicking tables tab
+            if (tabName === 'tables') {
+                renderTableManagement();
+            }
         });
     });
+}
+
+// Render table management view
+function renderTableManagement() {
+    const tableGrid = document.getElementById('adminTableGrid');
+    const tableDetail = document.getElementById('tableOrdersDetail');
+    
+    // Get table statuses from current orders (not cleared by waiter)
+    const tableOrders = {};
+    orders.filter(o => !o.clearedBy).forEach(order => {
+        if (!tableOrders[order.table]) {
+            tableOrders[order.table] = [];
+        }
+        tableOrders[order.table].push(order);
+    });
+    
+    // Render 10 tables
+    tableGrid.innerHTML = Array.from({ length: 10 }, (_, i) => {
+        const tableNum = i + 1;
+        const tableOrderList = tableOrders[tableNum] || [];
+        const isOccupied = tableOrderList.length > 0;
+        const orderCount = tableOrderList.length;
+        
+        return `
+            <div class="table-square ${isOccupied ? 'occupied' : 'free'}" onclick="showTableDetail(${tableNum})">
+                <div class="table-square-header">
+                    <div class="table-number">${tableNum}</div>
+                    <div class="table-status-text">${isOccupied ? 'Occupied' : 'Free'}</div>
+                    ${isOccupied ? `<div class="table-order-count">${orderCount} order${orderCount !== 1 ? 's' : ''}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Clear initial detail view
+    tableDetail.innerHTML = '<p class="empty-message">Click on a table to view details</p>';
+}
+
+// Show table detail (for click interaction)
+async function showTableDetail(tableNum) {
+    const tableOrdersDetail = document.getElementById('tableOrdersDetail');
+    
+    // Fetch all orders for this table (including history)
+    try {
+        const response = await fetch('/api/orders');
+        const allOrders = await response.json();
+        
+        // Filter orders for this table
+        const tableOrders = allOrders.filter(o => o.table == tableNum);
+        const currentOrders = tableOrders.filter(o => !o.clearedBy);
+        const historyOrders = tableOrders.filter(o => o.clearedBy);
+        
+        const isFree = currentOrders.length === 0;
+        
+        tableOrdersDetail.innerHTML = `
+            <div class="table-detail-full">
+                <div class="table-detail-header-full">
+                    <h3>🪑 Table ${tableNum}</h3>
+                    <span class="table-status-badge ${isFree ? 'status-free' : 'status-occupied'}">
+                        ${isFree ? '✓ Free' : `⚠ Occupied (${currentOrders.length} order${currentOrders.length !== 1 ? 's' : ''})`}
+                    </span>
+                </div>
+                
+                ${!isFree ? `
+                    <div class="table-current-section">
+                        <h4>📋 Current Orders</h4>
+                        ${currentOrders.map(order => {
+                            const total = order.items.reduce((sum, item) => {
+                                const qty = item.quantity || 1;
+                                const price = item.price || 0;
+                                return sum + (price * qty);
+                            }, 0);
+                            const statusBadge = {
+                                'pending': '<span class="status-badge status-pending">⏱️ Pending</span>',
+                                'preparing': '<span class="status-badge status-in-progress">⚡ Preparing</span>',
+                                'completed': '<span class="status-badge status-completed">✅ Completed</span>'
+                            }[order.status] || '';
+                            
+                            const time = new Date(order.timestamp).toLocaleTimeString('en-US', { 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                            });
+                            
+                            return `
+                                <div class="table-order-card">
+                                    <div class="table-order-header">
+                                        <div>
+                                            <strong>Order #${order.id}</strong> ${statusBadge}
+                                        </div>
+                                        <strong>$${total.toFixed(2)}</strong>
+                                    </div>
+                                    <div class="table-order-meta">
+                                        👤 ${order.waiter} • ⏰ ${time}
+                                    </div>
+                                    <div class="table-order-items">
+                                        ${order.items.map(item => {
+                                            const qty = item.quantity || 1;
+                                            const price = item.price || 0;
+                                            return `
+                                            <div class="table-order-item">
+                                                ${item.icon || '🍽️'} ${item.name} ${qty > 1 ? `×${qty}` : ''} - $${(price * qty).toFixed(2)}
+                                                ${item.notes ? `<div class="item-note-small">📝 ${item.notes}</div>` : ''}
+                                            </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                    ${order.notes ? `<div class="order-notes-small">📝 ${order.notes}</div>` : ''}
+                                    <div class="table-order-actions">
+                                        <button class="btn btn-sm btn-secondary" onclick="printReceipt(${order.id})">🖨️ Print Receipt</button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                ` : '<p class="table-free-message">✓ This table is currently free and available</p>'}
+                
+                ${historyOrders.length > 0 ? `
+                    <div class="table-history-section">
+                        <h4>📜 Table History (${historyOrders.length} orders)</h4>
+                        <div class="table-history-list">
+                            ${historyOrders.slice(0, 10).reverse().map(order => {
+                                const total = order.items.reduce((sum, item) => {
+                                    const qty = item.quantity || 1;
+                                    const price = item.price || 0;
+                                    return sum + (price * qty);
+                                }, 0);
+                                const date = new Date(order.timestamp).toLocaleDateString();
+                                const time = new Date(order.timestamp).toLocaleTimeString('en-US', { 
+                                    hour: '2-digit', 
+                                    minute: '2-digit' 
+                                });
+                                
+                                return `
+                                    <div class="table-history-item" onclick="toggleTableHistoryOrder(${order.id})">
+                                        <div class="table-history-header">
+                                            <div>
+                                                <strong>Order #${order.id}</strong> • ${order.items.length} items
+                                                <div class="table-history-time">${date} ${time}</div>
+                                            </div>
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <strong>$${total.toFixed(2)}</strong>
+                                                <button class="btn btn-xs btn-secondary" onclick="printReceipt(${order.id}); event.stopPropagation();" title="Print Receipt">🖨️</button>
+                                                <span class="expand-arrow" id="history-arrow-${order.id}">▼</span>
+                                            </div>
+                                        </div>
+                                        <div class="table-history-details" id="history-details-${order.id}" style="display: none;">
+                                            <div class="history-meta">👤 ${order.waiter} • 🧹 Cleared by ${order.clearedBy}</div>
+                                            <div class="history-items">
+                                                ${order.items.map(item => {
+                                                    const qty = item.quantity || 1;
+                                                    const price = item.price || 0;
+                                                    return `<div>${item.icon || '🍽️'} ${item.name} ${qty > 1 ? `×${qty}` : ''} - $${(price * qty).toFixed(2)}</div>`;
+                                                }).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
+        // Scroll to detail
+        tableOrdersDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+    } catch (error) {
+        console.error('Error loading table details:', error);
+        tableOrdersDetail.innerHTML = '<p class="error-message">Error loading table details</p>';
+    }
+}
+
+function toggleTableHistoryOrder(orderId) {
+    const details = document.getElementById(`history-details-${orderId}`);
+    const arrow = document.getElementById(`history-arrow-${orderId}`);
+    
+    if (details && arrow) {
+        if (details.style.display === 'none') {
+            details.style.display = 'block';
+            arrow.textContent = '▲';
+        } else {
+            details.style.display = 'none';
+            arrow.textContent = '▼';
+        }
+    }
 }
 
 function openMenuModal(itemId = null) {
@@ -485,4 +775,178 @@ function showNotification(message, type = 'info') {
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
+}
+
+function printReceipt(orderId) {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    
+    const total = order.items.reduce((sum, item) => {
+        const qty = item.quantity || 1;
+        const price = item.price || 0;
+        return sum + (price * qty);
+    }, 0);
+    const date = new Date(order.timestamp);
+    const dateStr = date.toLocaleDateString();
+    const timeStr = date.toLocaleTimeString();
+    
+    // Create receipt window
+    const receiptWindow = window.open('', '', 'width=400,height=600');
+    receiptWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Receipt - Order #${order.id}</title>
+            <style>
+                body {
+                    font-family: 'Courier New', monospace;
+                    max-width: 400px;
+                    margin: 20px auto;
+                    padding: 20px;
+                    background: white;
+                }
+                .receipt {
+                    border: 2px solid #000;
+                    padding: 20px;
+                }
+                .header {
+                    text-align: center;
+                    border-bottom: 2px dashed #000;
+                    padding-bottom: 15px;
+                    margin-bottom: 15px;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 24px;
+                }
+                .header p {
+                    margin: 5px 0;
+                    font-size: 12px;
+                }
+                .info-line {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 5px 0;
+                    font-size: 14px;
+                }
+                .items {
+                    border-top: 2px dashed #000;
+                    border-bottom: 2px dashed #000;
+                    padding: 15px 0;
+                    margin: 15px 0;
+                }
+                .item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 8px 0;
+                    font-size: 14px;
+                }
+                .item-name {
+                    flex: 1;
+                }
+                .item-price {
+                    font-weight: bold;
+                }
+                .item-note {
+                    font-size: 11px;
+                    color: #666;
+                    margin-left: 10px;
+                    font-style: italic;
+                }
+                .total {
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-align: right;
+                    margin-top: 15px;
+                    padding-top: 10px;
+                    border-top: 2px solid #000;
+                }
+                .footer {
+                    text-align: center;
+                    margin-top: 20px;
+                    font-size: 12px;
+                    border-top: 2px dashed #000;
+                    padding-top: 15px;
+                }
+                @media print {
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .receipt {
+                        border: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="receipt">
+                <div class="header">
+                    <h1>☕ COFFEE BAR</h1>
+                    <p>123 Main Street, City</p>
+                    <p>Tel: (555) 123-4567</p>
+                </div>
+                
+                <div class="info-line">
+                    <span>Order #:</span>
+                    <span><strong>${order.id}</strong></span>
+                </div>
+                <div class="info-line">
+                    <span>Table:</span>
+                    <span><strong>${order.table}</strong></span>
+                </div>
+                <div class="info-line">
+                    <span>Date:</span>
+                    <span>${dateStr}</span>
+                </div>
+                <div class="info-line">
+                    <span>Time:</span>
+                    <span>${timeStr}</span>
+                </div>
+                <div class="info-line">
+                    <span>Server:</span>
+                    <span>${order.waiter || 'N/A'}</span>
+                </div>
+                
+                <div class="items">
+                    ${order.items.map(item => {
+                        const qty = item.quantity || 1;
+                        const price = item.price || 0;
+                        return `
+                        <div class="item">
+                            <span class="item-name">${item.name} ${qty > 1 ? `x${qty}` : ''}</span>
+                            <span class="item-price">$${(price * qty).toFixed(2)}</span>
+                        </div>
+                        ${item.notes ? `<div class="item-note">Note: ${item.notes}</div>` : ''}
+                        `;
+                    }).join('')}
+                </div>
+                
+                ${order.notes ? `
+                    <div class="info-line">
+                        <span>Order Notes:</span>
+                    </div>
+                    <div style="font-size: 12px; font-style: italic; margin-bottom: 10px;">
+                        ${order.notes}
+                    </div>
+                ` : ''}
+                
+                <div class="total">
+                    TOTAL: $${total.toFixed(2)}
+                </div>
+                
+                <div class="footer">
+                    <p>Thank you for your visit!</p>
+                    <p>Please come again</p>
+                </div>
+            </div>
+            <script>
+                window.onload = function() {
+                    window.print();
+                };
+            </script>
+        </body>
+        </html>
+    `);
+    receiptWindow.document.close();
 }

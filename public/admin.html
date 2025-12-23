@@ -21,35 +21,58 @@
 
         <main class="main-content">
             <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="stats">📊 Statistics</button>
+                <button class="tab-btn active" data-tab="stats">📊 Overview</button>
+                <button class="tab-btn" data-tab="tables">🪑 Table Management</button>
                 <button class="tab-btn" data-tab="menu">🍽️ Menu Management</button>
                 <button class="tab-btn" data-tab="orders">📋 Orders</button>
                 <button class="tab-btn" data-tab="users">👥 Users</button>
             </div>
 
-            <!-- Statistics Tab -->
+            <!-- Overview Tab -->
             <div id="stats" class="tab-content active">
+                <div class="date-filter-section">
+                    <label for="dateFilter">Select Date:</label>
+                    <input type="date" id="dateFilter" class="date-input" />
+                    <button class="btn btn-sm btn-primary" onclick="filterByDate()">Apply</button>
+                    <button class="btn btn-sm btn-secondary" onclick="resetToToday()">Today</button>
+                </div>
+
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">📦</div>
                         <div class="stat-value" id="totalOrders">0</div>
-                        <div class="stat-label">Total Orders</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📅</div>
-                        <div class="stat-value" id="todayOrders">0</div>
                         <div class="stat-label">Today's Orders</div>
                     </div>
                     <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value" id="activeOrders">0</div>
+                        <div class="stat-label">Active Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🪑</div>
+                        <div class="stat-value" id="occupiedTables">0/10</div>
+                        <div class="stat-label">Occupied Tables</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-icon">✅</div>
-                        <div class="stat-value" id="completedToday">0</div>
-                        <div class="stat-label">Completed Today</div>
+                        <div class="stat-value" id="completedOrders">0</div>
+                        <div class="stat-label">Completed Orders</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">💰</div>
                         <div class="stat-value" id="totalRevenue">$0.00</div>
-                        <div class="stat-label">Today's Revenue</div>
+                        <div class="stat-label">Total Revenue</div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Table Management Tab -->
+            <div id="tables" class="tab-content">
+                <h2>🪑 Table Management</h2>
+                <div id="adminTableGrid" class="table-grid"></div>
+                <div class="admin-section">
+                    <h3>Table Orders Detail</h3>
+                    <div id="tableOrdersDetail"></div>
                 </div>
             </div>
 
@@ -67,13 +90,13 @@
                 <div class="section-header">
                     <h2>All Orders</h2>
                     <div class="filter-controls">
-                        <select id="orderStatusFilter" class="form-control filter-select">
+                        <select id="orderStatusFilter" class="form-control filter-select" onchange="renderOrdersList()">
                             <option value="all">All Status</option>
                             <option value="pending">Pending</option>
                             <option value="preparing">Preparing</option>
                             <option value="completed">Completed</option>
                         </select>
-                        <select id="orderDateFilter" class="form-control filter-select">
+                        <select id="orderDateFilter" class="form-control filter-select" onchange="renderOrdersList()">
                             <option value="all">All Time</option>
                             <option value="today">Today</option>
                             <option value="week">This Week</option>
@@ -82,7 +105,7 @@
                         <button id="exportOrdersBtn" class="btn btn-secondary btn-sm">📥 Export CSV</button>
                     </div>
                 </div>
-                <div id="ordersList" class="orders-list"></div>
+                <div id="ordersList" class="collapsible-orders-list"></div>
             </div>
 
             <!-- Users Tab -->

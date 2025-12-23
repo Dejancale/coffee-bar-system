@@ -1,1 +1,595 @@
-[]
+[
+  {
+    "id": 4,
+    "table": 1,
+    "items": [
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766451281043.4116
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766451281331.9932
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T00:54:45.834Z",
+    "completedAt": "2025-12-23T00:54:49.483Z",
+    "waiter": "Aleksandar Santovski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 5,
+    "table": 2,
+    "items": [
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766451498432.2024
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766451498816.5112
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T00:58:20.690Z",
+    "completedAt": "2025-12-23T00:58:23.717Z",
+    "waiter": "Aleksandar Santovski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 6,
+    "table": 1,
+    "items": [
+      {
+        "id": "cappuccino",
+        "name": "Cappuccino",
+        "category": "Coffee",
+        "price": 3.5,
+        "icon": "☕",
+        "description": "Espresso with steamed milk foam",
+        "available": true,
+        "orderId": 1766451655776.9978
+      },
+      {
+        "id": "latte",
+        "name": "Latte",
+        "category": "Coffee",
+        "price": 3.8,
+        "icon": "☕",
+        "description": "Smooth coffee with milk",
+        "available": true,
+        "orderId": 1766451656102.3425
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:00:57.571Z",
+    "completedAt": "2025-12-23T01:01:00.007Z",
+    "waiter": "Administrator",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 7,
+    "table": 1,
+    "items": [
+      {
+        "id": "mixed-juice",
+        "name": "Mixed Juice",
+        "category": "Juice",
+        "price": 3.8,
+        "icon": "🥤",
+        "description": "Tropical fruit mix",
+        "available": true,
+        "orderId": 1766451670932.0364
+      },
+      {
+        "id": "mixed-juice",
+        "name": "Mixed Juice",
+        "category": "Juice",
+        "price": 3.8,
+        "icon": "🥤",
+        "description": "Tropical fruit mix",
+        "available": true,
+        "orderId": 1766451671456.6675
+      },
+      {
+        "id": "mixed-juice",
+        "name": "Mixed Juice",
+        "category": "Juice",
+        "price": 3.8,
+        "icon": "🥤",
+        "description": "Tropical fruit mix",
+        "available": true,
+        "orderId": 1766451671930.9683
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:01:13.338Z",
+    "completedAt": "2025-12-23T01:01:16.098Z",
+    "waiter": "Administrator",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 8,
+    "table": 1,
+    "items": [
+      {
+        "id": "cappuccino",
+        "name": "Cappuccino",
+        "category": "Coffee",
+        "price": 3.5,
+        "icon": "☕",
+        "description": "Espresso with steamed milk foam",
+        "available": true,
+        "orderId": 1766451736246.662
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:02:17.716Z",
+    "completedAt": "2025-12-23T01:02:21.444Z",
+    "waiter": "Administrator",
+    "clearedBy": "Administrator"
+  },
+  {
+    "id": 9,
+    "table": 2,
+    "items": [
+      {
+        "id": "latte",
+        "name": "Latte",
+        "category": "Coffee",
+        "price": 3.8,
+        "icon": "☕",
+        "description": "Smooth coffee with milk",
+        "available": true,
+        "orderId": 1766451743540.5442
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766451744882.8005
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:02:26.859Z",
+    "completedAt": "2025-12-23T01:02:34.429Z",
+    "waiter": "Administrator",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 10,
+    "table": 1,
+    "items": [
+      {
+        "id": "cappuccino",
+        "name": "Cappuccino",
+        "category": "Coffee",
+        "price": 3.5,
+        "icon": "☕",
+        "description": "Espresso with steamed milk foam",
+        "available": true,
+        "orderId": 1766451811888.3364
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:03:36.358Z",
+    "completedAt": "2025-12-23T01:03:46.811Z",
+    "waiter": "Administrator",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 11,
+    "table": 7,
+    "items": [
+      {
+        "id": "mocha",
+        "name": "Mocha",
+        "category": "Coffee",
+        "price": 4.2,
+        "icon": "☕",
+        "description": "Chocolate coffee delight",
+        "available": true,
+        "orderId": 1766451986442.1343
+      },
+      {
+        "id": "mocha",
+        "name": "Mocha",
+        "category": "Coffee",
+        "price": 4.2,
+        "icon": "☕",
+        "description": "Chocolate coffee delight",
+        "available": true,
+        "orderId": 1766451987052.9485
+      },
+      {
+        "id": "mocha",
+        "name": "Mocha",
+        "category": "Coffee",
+        "price": 4.2,
+        "icon": "☕",
+        "description": "Chocolate coffee delight",
+        "available": true,
+        "orderId": 1766451987890.6973
+      },
+      {
+        "id": "mocha",
+        "name": "Mocha",
+        "category": "Coffee",
+        "price": 4.2,
+        "icon": "☕",
+        "description": "Chocolate coffee delight",
+        "available": true,
+        "orderId": 1766451988438.6106
+      },
+      {
+        "id": "mocha",
+        "name": "Mocha",
+        "category": "Coffee",
+        "price": 4.2,
+        "icon": "☕",
+        "description": "Chocolate coffee delight",
+        "available": true,
+        "orderId": 1766451988852.8352
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:06:40.946Z",
+    "completedAt": "2025-12-23T01:06:46.318Z",
+    "waiter": "Bogdan Talevski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 12,
+    "table": 8,
+    "items": [
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766452071121.6687
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:07:52.302Z",
+    "completedAt": "2025-12-23T01:07:58.431Z",
+    "waiter": "Bogdan Talevski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 13,
+    "table": 3,
+    "items": [
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766452129227.4023
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766452129635.826
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:08:51.151Z",
+    "completedAt": "2025-12-23T01:08:58.706Z",
+    "waiter": "Bogdan Talevski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 14,
+    "table": 4,
+    "items": [
+      {
+        "id": "iced-tea",
+        "name": "Iced Tea",
+        "category": "Cold Drinks",
+        "price": 2.8,
+        "icon": "🧃",
+        "description": "Refreshing cold tea",
+        "available": true,
+        "orderId": 1766452517937.6548
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766452518325.6936
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766452518637.4377
+      },
+      {
+        "id": "coca-cola",
+        "name": "Coca Cola",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Classic cola drink",
+        "available": true,
+        "orderId": 1766452519057.6284
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:15:37.819Z",
+    "completedAt": "2025-12-23T01:16:00.870Z",
+    "waiter": "Bogdan Talevski",
+    "clearedBy": "Administrator"
+  },
+  {
+    "id": 15,
+    "table": 2,
+    "items": [
+      {
+        "id": "cappuccino",
+        "name": "Cappuccino",
+        "category": "Coffee",
+        "price": 3.5,
+        "icon": "☕",
+        "description": "Espresso with steamed milk foam",
+        "available": true,
+        "orderId": 1766453679406.248
+      },
+      {
+        "id": "latte",
+        "name": "Latte",
+        "category": "Coffee",
+        "price": 3.8,
+        "icon": "☕",
+        "description": "Smooth coffee with milk",
+        "available": true,
+        "orderId": 1766453679699.8442
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:34:41.050Z",
+    "completedAt": "2025-12-23T01:34:48.117Z",
+    "waiter": "Administrator",
+    "clearedBy": "Administrator"
+  },
+  {
+    "id": 16,
+    "table": 3,
+    "items": [
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766454769699.4014
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766454770047.8145
+      },
+      {
+        "id": "coca-cola",
+        "name": "Coca Cola",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Classic cola drink",
+        "available": true,
+        "orderId": 1766454770389.9612
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T01:52:52.128Z",
+    "completedAt": "2025-12-23T01:52:57.813Z",
+    "waiter": "Aleksandar Santovski",
+    "clearedBy": "Aleksandar Santovski"
+  },
+  {
+    "id": 17,
+    "table": 2,
+    "items": [
+      {
+        "id": "cappuccino",
+        "name": "Cappuccino",
+        "category": "Coffee",
+        "price": 3.5,
+        "icon": "☕",
+        "description": "Espresso with steamed milk foam",
+        "available": true,
+        "orderId": 1766455500165.6787
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766455500602.2324
+      },
+      {
+        "id": "sparkling-water",
+        "name": "Sparkling Water",
+        "category": "Water",
+        "price": 2,
+        "icon": "💧",
+        "description": "Carbonated mineral water",
+        "available": true,
+        "orderId": 1766455501223.3276
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T02:05:02.997Z",
+    "completedAt": "2025-12-23T02:05:13.399Z",
+    "waiter": "Administrator",
+    "clearedBy": "Administrator"
+  },
+  {
+    "id": 18,
+    "table": 2,
+    "items": [
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766456907082.0173
+      },
+      {
+        "id": "iced-tea",
+        "name": "Iced Tea",
+        "category": "Cold Drinks",
+        "price": 2.8,
+        "icon": "🧃",
+        "description": "Refreshing cold tea",
+        "available": true,
+        "orderId": 1766456907404.5728
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T02:28:28.852Z",
+    "completedAt": "2025-12-23T02:28:42.514Z",
+    "waiter": "Aleksandar Santovski",
+    "clearedBy": "Bogdan Talevski"
+  },
+  {
+    "id": 19,
+    "table": 1,
+    "items": [
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Lemon-lime soda",
+        "available": true,
+        "orderId": 1766457107448.2173
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "category": "Cold Drinks",
+        "price": 2.5,
+        "icon": "🥤",
+        "description": "Orange flavored soda",
+        "available": true,
+        "orderId": 1766457107702.095
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T02:31:51.614Z",
+    "completedAt": "2025-12-23T02:32:06.570Z",
+    "waiter": "Bogdan Talevski",
+    "clearedBy": "Administrator"
+  },
+  {
+    "id": 20,
+    "table": 2,
+    "items": [
+      {
+        "id": "sparkling-water",
+        "name": "Sparkling Water",
+        "category": "Water",
+        "price": 2,
+        "icon": "💧",
+        "description": "Carbonated mineral water",
+        "available": true,
+        "orderId": 1766457763860.1775
+      },
+      {
+        "id": "still-water",
+        "name": "Still Water",
+        "category": "Water",
+        "price": 1.5,
+        "icon": "💧",
+        "description": "Natural mineral water",
+        "available": true,
+        "orderId": 1766457764194.4478
+      }
+    ],
+    "notes": "",
+    "status": "completed",
+    "timestamp": "2025-12-23T02:42:45.286Z",
+    "completedAt": "2025-12-23T02:42:49.351Z",
+    "waiter": "Aleksandar Santovski"
+  }
+]

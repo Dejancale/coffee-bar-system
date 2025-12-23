@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     connectWebSocket();
     loadOrders();
     setupLogout();
+    setupTabs();
     
     // Refresh orders every 30 seconds as backup
     setInterval(loadOrders, 30000);
@@ -95,83 +96,61 @@ function renderOrderList(containerId, orderList, status) {
 
 // Create order card HTML
 function createOrderCard(order, status) {
-    const total = order.items.reduce((sum, item) => sum + item.price, 0);
     const timeAgo = getTimeAgo(order.timestamp);
     const completedTime = order.completedAt ? getTimeAgo(order.completedAt) : null;
-    const hasOverflow = order.items.length > 3; // Show expand button if more than 3 items
+    const hasOverflow = order.items.length > 3;
+    const orderAge = Date.now() - new Date(order.timestamp).getTime();
+    const isUrgent = orderAge > 10 * 60 * 1000; // 10 minutes
     
     let actionsHtml = '';
     if (status === 'pending') {
         actionsHtml = `
-            <button class="btn btn-primary btn-sm" onclick="updateOrderStatus(${order.id}, 'preparing')">
-                Start Preparing
+            <button class="btn btn-primary btn-sm btn-action-start" onclick="updateOrderStatus(${order.id}, 'preparing')">
+                ⚡ Start Preparing
             </button>
             <button class="btn btn-danger btn-sm" onclick="deleteOrder(${order.id})">
-                Cancel
+                ❌ Cancel
             </button>
         `;
     } else if (status === 'preparing') {
         actionsHtml = `
-            <button class="btn btn-success btn-sm" onclick="updateOrderStatus(${order.id}, 'completed')">
-                Mark Complete
+            <button class="btn btn-success btn-sm btn-action-complete" onclick="updateOrderStatus(${order.id}, 'completed')">
+                ✅ Mark Complete
             </button>
             <button class="btn btn-secondary btn-sm" onclick="updateOrderStatus(${order.id}, 'pending')">
-                Back to Pending
-            </button>
-        `;
-    } else {
-        actionsHtml = `
-            <button class="btn btn-danger btn-sm" onclick="deleteOrder(${order.id})">
-                Remove
+                ← Back to Pending
             </button>
         `;
     }
     
     return `
-        <div class="order-card order-card-${status} ${hasOverflow ? 'has-overflow collapsed' : ''}" id="order-${order.id}">
+        <div class="order-card order-card-${status} ${isUrgent && status === 'pending' ? 'order-urgent' : ''}" id="order-${order.id}">
             <div class="order-header">
-                <div>
+                <div class="order-header-left">
                     <strong class="order-number">Order #${order.id}</strong>
-                    <span class="order-table">${order.table}</span>
+                    <span class="order-table">🪑 Table ${order.table}</span>
+                    ${status === 'pending' && isUrgent ? '<span class="urgent-badge">⚠️ Urgent</span>' : ''}
                 </div>
-                <span class="order-time">${timeAgo}</span>
+                <span class="order-time">🕒 ${timeAgo}</span>
             </div>
             
-            <div class="order-items-wrapper">
-                <div class="order-items">
-                    ${order.items.map(item => `
-                        <div class="order-item">
-                            <span class="item-icon">${item.icon}</span>
-                            <div class="item-info">
-                                <span class="item-name">${item.name}</span>
-                                ${item.notes ? `<span class="item-note">📝 ${item.notes}</span>` : ''}
-                            </div>
-                            <span class="item-price">$${item.price.toFixed(2)}</span>
+            <div class="order-items-list-barmen">
+                ${order.items.map(item => `
+                    <div class="barmen-order-item">
+                        <span class="barmen-item-icon">${item.icon}</span>
+                        <div class="barmen-item-content">
+                            <div class="barmen-item-name">${item.name} ${item.quantity > 1 ? `×${item.quantity}` : ''}</div>
+                            ${item.notes ? `<div class="barmen-item-note">📝 ${item.notes}</div>` : ''}
                         </div>
-                    `).join('')}
-                </div>
+                    </div>
+                `).join('')}
             </div>
-            
-            ${hasOverflow ? `
-                <button class="order-expand-btn" onclick="toggleOrderExpand(${order.id})">
-                    <span class="expand-text">View All Items</span>
-                    <span class="expand-icon">▼</span>
-                </button>
-            ` : ''}
             
             ${order.notes ? `
                 <div class="order-notes">
                     <strong>📝 Notes:</strong> ${order.notes}
                 </div>
             ` : ''}
-            
-            <div class="order-footer">
-                <div class="order-total">
-                    <strong>Total:</strong>
-                    <strong>$${total.toFixed(2)}</strong>
-                </div>
-                ${completedTime ? `<div class="completed-time">Completed ${completedTime}</div>` : ''}
-            </div>
             
             <div class="order-actions">
                 ${actionsHtml}
@@ -372,44 +351,53 @@ function toggleOrderExpand(orderId) {
 
 // Create compact order card for completed orders
 function createCompactOrderCard(order) {
-    const total = order.items.reduce((sum, item) => sum + item.price, 0);
     const completedTime = order.completedAt ? getTimeAgo(order.completedAt) : '';
+    const orderTime = new Date(order.timestamp);
+    const timeStr = orderTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    const itemCount = order.items.length;
+    const firstItem = order.items[0];
     
     return `
-        <div class="recent-order-compact" id="completed-order-${order.id}">
-            <div class="order-compact-header" onclick="toggleCompletedOrder(${order.id})">
-                <div class="order-compact-main">
-                    <strong>Order #${order.id}</strong>
-                    <span class="order-compact-table">Table ${order.table}</span>
-                    <span class="order-time-small">${completedTime}</span>
+        <div class="barmen-completed-card" id="completed-order-${order.id}">
+            <div class="barmen-completed-header" onclick="toggleCompletedOrder(${order.id})">
+                <div class="barmen-completed-info">
+                    <div class="barmen-completed-details">
+                        <div class="barmen-completed-title">
+                            <strong>Table ${order.table}</strong>
+                            <span class="barmen-item-count">${itemCount} item${itemCount !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="barmen-completed-subtitle">
+                            ${firstItem ? firstItem.icon + ' ' + firstItem.name : 'Order'} ${itemCount > 1 ? '+ ' + (itemCount - 1) + ' more' : ''}
+                        </div>
+                        <div class="barmen-completed-time">${completedTime}</div>
+                    </div>
                 </div>
-                <span class="expand-arrow">▼</span>
+                <div class="barmen-expand-icon" id="completed-arrow-${order.id}">
+                    ▼
+                </div>
             </div>
-            <div class="order-compact-details" style="display: none;">
-                <div class="order-items">
+            <div class="barmen-completed-content hidden" id="completed-details-${order.id}">
+                <div class="barmen-items-list">
                     ${order.items.map(item => `
-                        <div class="order-item">
-                            <span class="item-icon">${item.icon}</span>
-                            <div class="item-info">
-                                <span class="item-name">${item.name}</span>
-                                ${item.notes ? `<span class="item-note">📝 ${item.notes}</span>` : ''}
+                        <div class="barmen-completed-item">
+                            <span class="barmen-item-icon">${item.icon}</span>
+                            <div class="barmen-item-info">
+                                <div class="barmen-item-name">${item.name}</div>
+                                ${item.quantity > 1 ? `<div class="barmen-item-qty">×${item.quantity}</div>` : ''}
+                                ${item.notes ? `<div class="barmen-item-note">📝 ${item.notes}</div>` : ''}
                             </div>
-                            <span class="item-price">$${item.price.toFixed(2)}</span>
                         </div>
                     `).join('')}
                 </div>
                 ${order.notes ? `
-                    <div class="order-notes">
-                        <strong>📝 Notes:</strong> ${order.notes}
+                    <div class="barmen-order-note">
+                        <strong>📝 Order Notes:</strong> ${order.notes}
                     </div>
                 ` : ''}
-                <div class="order-footer">
-                    <div class="order-total">
-                        <strong>Total: $${total.toFixed(2)}</strong>
-                    </div>
-                </div>
-                <div class="order-actions">
-                    <button class="btn btn-danger btn-sm" onclick="deleteOrder(${order.id})">Remove</button>
+                <div class="barmen-order-meta">
+                    <div>Waiter: ${order.waiter}</div>
+                    ${order.clearedBy ? `<div>Cleared by: ${order.clearedBy}</div>` : ''}
+                    <div>${timeStr}</div>
                 </div>
             </div>
         </div>
@@ -418,15 +406,135 @@ function createCompactOrderCard(order) {
 
 // Toggle completed order details
 function toggleCompletedOrder(orderId) {
-    const orderEl = document.getElementById(`completed-order-${orderId}`);
-    const details = orderEl.querySelector('.order-compact-details');
-    const arrow = orderEl.querySelector('.expand-arrow');
+    const details = document.getElementById(`completed-details-${orderId}`);
+    const arrow = document.getElementById(`completed-arrow-${orderId}`);
     
-    if (details.style.display === 'none') {
-        details.style.display = 'block';
-        arrow.textContent = '▲';
-    } else {
-        details.style.display = 'none';
-        arrow.textContent = '▼';
+    if (details && arrow) {
+        details.classList.toggle('hidden');
+        if (details.classList.contains('hidden')) {
+            arrow.textContent = '▼';
+        } else {
+            arrow.textContent = '▲';
+        }
     }
+}
+
+// Setup tabs
+function setupTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabName = btn.dataset.tab;
+            
+            // Remove active class from all tabs and contents
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            btn.classList.add('active');
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+            
+            // Load history when history tab is clicked
+            if (tabName === 'history') {
+                loadBarmenHistory();
+            }
+        });
+    });
+}
+
+// Load barmen order history
+async function loadBarmenHistory() {
+    try {
+        const response = await fetch('/api/orders');
+        const allOrders = await response.json();
+        renderBarmenHistory(allOrders);
+    } catch (error) {
+        console.error('Error loading history:', error);
+    }
+}
+
+// Render barmen order history
+function renderBarmenHistory(allOrders) {
+    const historyContainer = document.getElementById('barmenHistory');
+    
+    if (allOrders.length === 0) {
+        historyContainer.innerHTML = '<p class="no-orders">No orders yet</p>';
+        return;
+    }
+    
+    // Sort orders by date (newest first)
+    const sortedOrders = [...allOrders].sort((a, b) => 
+        new Date(b.timestamp) - new Date(a.timestamp)
+    );
+    
+    historyContainer.innerHTML = sortedOrders.map(order => {
+        const orderDate = new Date(order.timestamp);
+        const dateStr = orderDate.toLocaleDateString();
+        const timeStr = orderDate.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        const statusIcon = order.clearedBy ? '✅' : (order.status === 'completed' ? '🔄' : (order.status === 'preparing' ? '⚡' : '⏱️'));
+        const statusText = order.clearedBy ? 'Cleared' : order.status;
+        
+        return `
+            <div class="history-order-card" onclick="toggleSimpleOrder(${order.id})">
+                <div class="history-order-header">
+                    <div class="history-order-left">
+                        <span class="history-status-icon">${statusIcon}</span>
+                        <div class="history-order-info">
+                            <div class="history-order-title"><strong>Order #${order.id}</strong> · Table ${order.table}</div>
+                            <div class="history-order-meta">${dateStr} ${timeStr} · ${order.waiter}</div>
+                        </div>
+                    </div>
+                    <div class="history-order-right">
+                        <span class="history-status-badge status-${order.status}">${statusText}</span>
+                        <span class="expand-arrow" id="simple-arrow-${order.id}">▼</span>
+                    </div>
+                </div>
+                <div class="history-order-details" id="simple-details-${order.id}" style="display: none;">
+                    <div class="history-items-list">
+                        ${order.items.map(item => `
+                            <div class="history-item">
+                                <span class="history-item-icon">${item.icon || '🍽️'}</span>
+                                <span class="history-item-name">${item.name} ${item.quantity > 1 ? `×${item.quantity}` : ''}</span>
+                                ${item.notes ? `<div class="history-item-note">📝 ${item.notes}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${order.notes ? `<div class="history-order-note"><strong>📝 Order Note:</strong> ${order.notes}</div>` : ''}
+                    ${order.clearedBy ? `<div class="history-cleared-info">✓ Cleared by ${order.clearedBy}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Toggle simple order details
+function toggleSimpleOrder(orderId) {
+    const details = document.getElementById(`simple-details-${orderId}`);
+    const arrow = document.getElementById(`simple-arrow-${orderId}`);
+    
+    if (details && arrow) {
+        if (details.style.display === 'none') {
+            details.style.display = 'block';
+            arrow.textContent = '▲';
+        } else {
+            details.style.display = 'none';
+            arrow.textContent = '▼';
+        }
+    }
+}
+
+// Get status badge HTML
+function getStatusBadge(status) {
+    const badges = {
+        'pending': '<span class="status-badge status-pending">⏱️ Pending</span>',
+        'in-progress': '<span class="status-badge status-in-progress">⚡ In Progress</span>',
+        'completed': '<span class="status-badge status-completed">✅ Completed</span>'
+    };
+    return badges[status] || '';
 }

@@ -279,14 +279,23 @@ app.delete('/api/orders/:id', requireAuth(), (req, res) => {
 
 // Table management - Clear table (mark as unoccupied but keep history)
 app.post('/api/tables/:tableNum/clear', requireAuth(), (req, res) => {
-    const tableNum = req.params.tableNum;
+    const tableNum = parseInt(req.params.tableNum);
     
-    // Mark all active orders for this table as completed
-    const tableOrders = orders.filter(o => o.table == tableNum && o.status !== 'completed');
+    // Get all orders for this table that haven't been cleared yet
+    const tableOrders = orders.filter(o => o.table == tableNum && !o.clearedBy);
+    
+    if (tableOrders.length === 0) {
+        return res.json({ success: true, clearedOrders: 0, message: 'No orders to clear' });
+    }
     
     tableOrders.forEach(order => {
-        order.status = 'completed';
-        order.completedAt = new Date().toISOString();
+        // Mark as completed if not already
+        if (order.status !== 'completed') {
+            order.status = 'completed';
+        }
+        if (!order.completedAt) {
+            order.completedAt = new Date().toISOString();
+        }
         order.clearedBy = req.session.user.name;
     });
     

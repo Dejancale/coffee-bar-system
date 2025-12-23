@@ -396,3 +396,1094 @@
     justify-content: flex-end;
     margin-top: 20px;
 }
+/* Date Filter Section */
+.date-filter-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.date-filter-section label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.date-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+/* Cleared Badge */
+.cleared-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background: #10b981;
+    color: white;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Collapsible Orders List (Admin) */
+.collapsible-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.collapsible-order-item {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.collapsible-order-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.collapsible-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: linear-gradient(to right, #f8fafc, white);
+    border-bottom: 1px solid #e2e8f0;
+    user-select: none;
+}
+
+.collapsible-order-header:hover {
+    background: linear-gradient(to right, #f1f5f9, #f8fafc);
+}
+
+.order-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.order-icon {
+    font-size: 20px;
+}
+
+.order-table {
+    padding: 4px 10px;
+    background: #e0f2fe;
+    color: #0369a1;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.order-total-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.collapse-arrow {
+    color: #64748b;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.collapsible-order-details {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+}
+
+.order-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.order-items-list h4 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.order-items-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-items-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14px;
+}
+
+.order-items-list li:last-child {
+    border-bottom: none;
+}
+
+.order-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 10px;
+}
+
+/* Simple Order Cards (Barmen History) */
+.simple-order-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.simple-order-card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.simple-order-card.expanded {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.simple-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+}
+
+.simple-order-details {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.simple-order-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+}
+
+.simple-order-details li {
+    padding: 5px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Completed Order Cards (Barmen) */
+.completed-order-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border-left: 4px solid #10b981;
+    transition: all 0.2s;
+}
+
+.completed-order-card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.completed-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    cursor: pointer;
+    background: linear-gradient(to right, #f0fdf4, white);
+    user-select: none;
+}
+
+.completed-order-header:hover {
+    background: linear-gradient(to right, #dcfce7, #f8fafc);
+}
+
+.completed-order-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.completed-order-badge {
+    font-size: 24px;
+}
+
+.table-label {
+    padding: 4px 10px;
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.completed-time {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.completed-order-total {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.completed-order-details {
+    padding: 16px 18px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+}
+
+.completed-order-details .order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.completed-by {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* History Order Cards (Barmen) */
+.history-order-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.history-order-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+}
+
+.history-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f8fafc 0%, white 100%);
+    border-bottom: 1px solid #e2e8f0;
+    user-select: none;
+}
+
+.history-order-header:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+}
+
+.history-order-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.history-status-icon {
+    font-size: 22px;
+    min-width: 28px;
+}
+
+.history-order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.history-order-title {
+    font-size: 15px;
+}
+
+.history-order-meta {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.history-order-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.history-status-badge {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.history-status-badge.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.history-status-badge.status-preparing {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.history-status-badge.status-completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.history-total {
+    font-size: 16px;
+    min-width: 70px;
+    text-align: right;
+}
+
+.history-order-details {
+    padding: 18px 20px;
+    background: #fafafa;
+}
+
+.history-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.history-item-icon {
+    font-size: 18px;
+}
+
+.history-item-name {
+    font-weight: 500;
+}
+
+.history-item-price {
+    font-weight: 600;
+    color: #059669;
+}
+
+.history-item-note {
+    grid-column: 2 / 4;
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+}
+
+.history-order-note {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #fef3c7;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.history-cleared-info {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Table Detail Full View (Admin) */
+.table-detail-full {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.table-detail-header-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table-detail-header-full h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.table-status-badge {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.status-free {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-occupied {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.table-current-section {
+    margin-bottom: 24px;
+}
+
+.table-current-section h4 {
+    margin: 0 0 14px 0;
+    font-size: 16px;
+    color: #334155;
+}
+
+.table-order-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.table-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.table-order-meta {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.table-order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.table-order-item {
+    font-size: 14px;
+    padding: 4px 0;
+}
+
+.item-note-small {
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+    margin-left: 20px;
+}
+
+.order-notes-small {
+    margin-top: 8px;
+    padding: 8px;
+    background: #fef3c7;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.table-free-message {
+    padding: 24px;
+    text-align: center;
+    background: #f0fdf4;
+    border-radius: 10px;
+    color: #166534;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.table-history-section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid #e2e8f0;
+}
+
+.table-history-section h4 {
+    margin: 0 0 14px 0;
+    font-size: 16px;
+    color: #334155;
+}
+
+.table-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.table-history-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.table-history-item:hover {
+    background: #f1f5f9;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.table-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-history-time {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+.table-history-details {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.history-meta {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.history-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+}
+
+/* Completed Order Simple (Barmen) */
+.completed-order-simple {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid #10b981;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+
+.completed-order-simple:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.completed-simple-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+}
+
+.completed-check {
+    font-size: 20px;
+    min-width: 24px;
+}
+
+.completed-info {
+    flex: 1;
+}
+
+.completed-info strong {
+    font-size: 14px;
+}
+
+.completed-time-small {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.btn-xs {
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+/* Table Order Actions */
+.table-order-actions {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* History Item Grid Update (Remove Price Column) */
+.history-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.history-item-note {
+    grid-column: 1 / 3;
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* Enhanced Barmen Order Cards */
+.order-urgent {
+    border-left: 4px solid #ef4444 !important;
+    animation: pulse-urgent 2s ease-in-out infinite;
+}
+
+@keyframes pulse-urgent {
+    0%, 100% {
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    }
+    50% {
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+    }
+}
+
+.urgent-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.order-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.order-table {
+    padding: 4px 10px;
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-action-start {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    font-weight: 600;
+}
+
+.btn-action-start:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.btn-action-complete {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    font-weight: 600;
+}
+
+.btn-action-complete:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Completed Orders Expandable */
+.completed-order-expandable {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 3px solid #10b981;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.completed-order-expandable:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.14);
+    transform: translateY(-1px);
+}
+
+.completed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    user-select: none;
+}
+
+.completed-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.completed-check {
+    font-size: 22px;
+    min-width: 26px;
+}
+
+.completed-info strong {
+    font-size: 15px;
+}
+
+.completed-time-text {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+.completed-arrow {
+    font-size: 14px;
+    color: #64748b;
+    transition: transform 0.2s;
+    min-width: 20px;
+    text-align: center;
+}
+
+.completed-details {
+    padding: 0 16px 14px 16px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.completed-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.completed-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+}
+
+.completed-item-icon {
+    font-size: 18px;
+    min-width: 24px;
+}
+
+.completed-item-info {
+    flex: 1;
+}
+
+.completed-item-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.completed-item-note {
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.completed-order-note {
+    margin-top: 10px;
+    padding: 10px;
+    background: #fef3c7;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.completed-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.order-meta-info {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--border-color);
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Clean Barmen Order Items */
+.order-items-list-barmen {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.barmen-order-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.barmen-order-item:hover {
+    background: #f1f5f9;
+}
+
+.barmen-item-icon {
+    font-size: 24px;
+    min-width: 30px;
+    line-height: 1;
+}
+
+.barmen-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.barmen-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.barmen-item-note {
+    font-size: 13px;
+    color: #64748b;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+/* Modern Barmen Completed Orders */
+/* Barmen Completed Orders - Simple & Clean */
+.barmen-completed-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.barmen-completed-card:hover {
+    border-color: #10b981;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+.barmen-completed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: linear-gradient(to right, #f0fdf4, #ffffff);
+    cursor: pointer;
+    user-select: none;
+}
+
+.barmen-completed-header:hover {
+    background: linear-gradient(to right, #dcfce7, #f9fafb);
+}
+
+.barmen-completed-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.barmen-completed-badge {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.barmen-completed-details {
+    flex: 1;
+}
+
+.barmen-completed-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.barmen-completed-title strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.barmen-item-count {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #10b981;
+    color: white;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.barmen-completed-subtitle {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 2px;
+}
+
+.barmen-completed-time {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.barmen-expand-icon {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: bold;
+}
+
+.barmen-completed-content {
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+
+.barmen-completed-content.hidden {
+    display: none;
+}
+
+.barmen-items-list {
+    padding: 16px;
+}
+
+.barmen-completed-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.barmen-completed-item:last-child {
+    margin-bottom: 0;
+}
+
+.barmen-item-icon {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.barmen-item-info {
+    flex: 1;
+}
+
+.barmen-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+}
+
+.barmen-item-qty {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #10b981;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.barmen-item-note {
+    font-size: 13px;
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 4px;
+    padding: 6px 8px;
+    background: #f3f4f6;
+    border-radius: 4px;
+}
+
+.barmen-order-note {
+    padding: 12px 16px;
+    background: #fef3c7;
+    border-left: 3px solid #f59e0b;
+    margin: 0 16px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #78350f;
+}
+
+.barmen-order-note strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.barmen-order-meta {
+    display: flex;
+    gap: 16px;
+    padding: 12px 16px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.barmen-order-meta div {
+    font-weight: 500;
+}
+

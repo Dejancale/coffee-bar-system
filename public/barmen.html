@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barmen - Order System</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-v2.css">
 </head>
 <body>
     <div class="container">
@@ -20,29 +21,43 @@
             </div>
         </header>
 
-        <main class="main-content barmen-layout">
-            <div class="orders-section">
-                <div class="section-header">
-                    <h2>🔔 Pending Orders</h2>
-                    <span class="badge" id="pendingCount">0</span>
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="orders">📋 Active Orders</button>
+            <button class="tab-btn" data-tab="history">📜 Order History</button>
+        </nav>
+
+        <main class="main-content">
+            <div id="ordersTab" class="tab-content active">
+                <div class="barmen-layout">
+                    <div class="orders-section">
+                        <div class="section-header">
+                            <h2>🔔 Pending Orders</h2>
+                            <span class="badge" id="pendingCount">0</span>
+                        </div>
+                        <div id="pendingOrders" class="orders-list"></div>
+                    </div>
+
+                    <div class="orders-section">
+                        <div class="section-header">
+                            <h2>⏳ In Progress</h2>
+                            <span class="badge" id="progressCount">0</span>
+                        </div>
+                        <div id="progressOrders" class="orders-list"></div>
+                    </div>
+
+                    <div class="orders-section">
+                        <div class="section-header">
+                            <h2>✅ Completed</h2>
+                            <span class="badge" id="completedCount">0</span>
+                        </div>
+                        <div id="completedOrders" class="orders-list"></div>
+                    </div>
                 </div>
-                <div id="pendingOrders" class="orders-list"></div>
             </div>
 
-            <div class="orders-section">
-                <div class="section-header">
-                    <h2>⏳ In Progress</h2>
-                    <span class="badge" id="progressCount">0</span>
-                </div>
-                <div id="progressOrders" class="orders-list"></div>
-            </div>
-
-            <div class="orders-section">
-                <div class="section-header">
-                    <h2>✅ Completed</h2>
-                    <span class="badge" id="completedCount">0</span>
-                </div>
-                <div id="completedOrders" class="orders-list"></div>
+            <div id="historyTab" class="tab-content">
+                <h2>📜 Order History</h2>
+                <div id="barmenHistory" class="history-list"></div>
             </div>
         </main>
     </div>
