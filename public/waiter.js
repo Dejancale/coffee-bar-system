@@ -119,8 +119,8 @@ function selectTable(tableNum) {
 // View table details
 function viewTableDetails() {
     if (!selectedTable) return;
-    
-    const tableOrders = allOrders.filter(o => o.table == selectedTable);
+    // Only show orders for this table that are NOT cleared
+    const tableOrders = allOrders.filter(o => o.table == selectedTable && !o.clearedBy);
     const modal = document.getElementById('tableModal');
     const modalTableNum = document.getElementById('modalTableNumber');
     const modalBody = document.getElementById('tableModalBody');
