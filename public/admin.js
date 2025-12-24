@@ -482,8 +482,9 @@ async function showTableDetail(tableNum) {
         
         // Filter orders for this table
         const tableOrders = allOrders.filter(o => o.table == tableNum);
-        const currentOrders = tableOrders.filter(o => !o.clearedBy);
-        const historyOrders = tableOrders.filter(o => o.clearedBy);
+        // Only show orders that are not cleared and not completed
+        const currentOrders = tableOrders.filter(o => !o.clearedBy && o.status !== 'completed');
+        const historyOrders = tableOrders.filter(o => o.clearedBy || o.status === 'completed');
         
         const isFree = currentOrders.length === 0;
         
